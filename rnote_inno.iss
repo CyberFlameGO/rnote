@@ -12,7 +12,8 @@
 
 #define app_id = "com.github.flxzt.rnote"
 #define source_root =".\"
-#define install_prefix "C:\gnome"
+#define meson_install_prefix "C:\gnome"
+#define mingw_path "C:\msys64\mingw64"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -33,10 +34,11 @@ LicenseFile={#source_root}LICENSE
 ;PrivilegesRequired=lowest
 OutputDir={#source_root}\_inno
 OutputBaseFilename=rnote_setup
-SetupIconFile={#source_root}\rnote-ui\data\icons\scalable\apps\rnote.ico
+SetupIconFile={#source_root}\rnote-ui\data\icons\rnote.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
+UninstallDisplayIcon = {app}\bin\{#MyAppExeName}
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -45,8 +47,11 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "{#install_prefix}\bin\{#MyAppExeName}"; DestDir: "{app}\bin\"; Flags: ignoreversion
-Source: "{#install_prefix}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+; DLLs
+; Source: "{#mingw_path}\bin\libadwaita-1-0.dll"; DestDir: "{app}\bin\"; Flags: ignoreversion
+
+Source: "{#meson_install_prefix}\bin\{#MyAppExeName}"; DestDir: "{app}\bin\"; Flags: ignoreversion
+Source: "{#meson_install_prefix}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
